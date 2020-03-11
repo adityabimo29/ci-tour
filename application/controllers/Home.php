@@ -17,16 +17,18 @@ class Home extends CI_Controller {
         $this->template->display('add');
     }
 
-    function save(){
+    public function save(){
         $this->form_validation->set_rules('name','Name','required');
-        if($this->form_validation->run() === TRUE) {
+        
+        if($this->form_validation->run() === FALSE) {
+            $this->template->display('add');
+        }else{
+            
             $data = array(
                 'name' => $this->input->post('name'),
             );
             $this->home_model->save($data);
             redirect('home');
-        }else{
-            $this->template->display('home/add');
         }
     }
 
